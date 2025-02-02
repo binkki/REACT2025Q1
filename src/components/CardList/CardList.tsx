@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../Card/Card';
 import { CardInfo } from '../../types';
+import { ERROR_MESSAGE } from '../../utils/constants';
 
 class CardList extends React.Component {
   cards: CardInfo[];
@@ -22,7 +23,7 @@ class CardList extends React.Component {
       </>
     ) : (
       <>
-        <div>Nothing was found</div>
+        <div>{ERROR_MESSAGE}</div>
       </>
     );
   }

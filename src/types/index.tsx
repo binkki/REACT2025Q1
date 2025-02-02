@@ -25,6 +25,7 @@ type PageInfo = {
 };
 
 export type ApiResponse = {
-  info: PageInfo;
-  results: CardInfo[];
+  error?: string;
+  info?: PageInfo;
+  results?: CardInfo[];
 };
