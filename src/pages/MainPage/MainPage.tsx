@@ -6,6 +6,7 @@ import { API, SEARCH_KEY } from '../../utils/constants';
 import { ApiResponse, CardInfo } from '../../types';
 import { getLsValue } from '../../utils/utils';
 import Loader from '../../components/Loader/Loader';
+import ErrorButton from '../../components/ErrorBoundary/ErrorButton';
 
 class MainPage extends React.Component {
   search: Search;
@@ -22,7 +23,6 @@ class MainPage extends React.Component {
     fetch(API + getLsValue(SEARCH_KEY))
       .then((response) => response.json())
       .then((value: ApiResponse) => {
-        console.log(value);
         this.cards = value.results ?? [];
         this.forceUpdate();
       });
@@ -32,6 +32,7 @@ class MainPage extends React.Component {
     return (
       <div className="main-wrapper">
         {this.search.render()}
+        <ErrorButton />
         {this.cards
           ? new CardList({ cards: this.cards }).render()
           : this.loader.render()}
