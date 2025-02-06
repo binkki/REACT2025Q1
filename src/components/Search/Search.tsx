@@ -1,38 +1,34 @@
-import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { SEARCH_KEY } from '../../utils/constants';
 import { getLsValue, setLsValue } from '../../utils/utils';
 
-class Search extends React.Component {
-  searchValue: string;
+type SearchFormFields = {
+  search: string;
+};
 
-  constructor(props: object) {
-    super(props);
-    this.searchValue = getLsValue(SEARCH_KEY);
-    this.search = this.search.bind(this);
-    this.input = this.input.bind(this);
-  }
+const Search = (props: { search: () => Promise<void> }) => {
+  const { register, handleSubmit, reset } = useForm<SearchFormFields>();
+  const { search } = props;
 
-  search = () => {
-    setLsValue(SEARCH_KEY, this.searchValue);
+  const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
+    reset();
+    setLsValue(SEARCH_KEY, data.search);
+    search();
   };
 
-  input = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.searchValue = (e.target as HTMLInputElement).value;
-  };
-
-  render() {
-    return (
-      <form className="search-wrapper" onSubmit={this.search}>
+  return (
+    <>
+      <form className="search-wrapper" onSubmit={handleSubmit(submitSearch)}>
         <input
           id="search-input"
-          type="search"
-          onChange={this.input}
+          type="input"
           defaultValue={getLsValue(SEARCH_KEY)}
+          {...register('search')}
         />
         <input className="search-submit" type="submit" value="Search" />
       </form>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default Search;
