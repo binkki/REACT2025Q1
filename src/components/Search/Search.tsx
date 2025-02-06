@@ -1,19 +1,17 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { SEARCH_KEY } from '../../utils/constants';
-import { getLsValue, setLsValue } from '../../utils/utils';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 type SearchFormFields = {
   search: string;
 };
 
-const Search = (props: { search: () => Promise<void> }) => {
-  const { register, handleSubmit, reset } = useForm<SearchFormFields>();
+const Search = (props: { search: (searchTerm?: string) => Promise<void> }) => {
+  const { register, handleSubmit } = useForm<SearchFormFields>();
   const { search } = props;
+  const { getSearchValue } = useLocalStorage();
 
   const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
-    reset();
-    setLsValue(SEARCH_KEY, data.search);
-    search();
+    search(data.search);
   };
 
   return (
@@ -22,7 +20,7 @@ const Search = (props: { search: () => Promise<void> }) => {
         <input
           id="search-input"
           type="input"
-          defaultValue={getLsValue(SEARCH_KEY)}
+          defaultValue={getSearchValue()}
           {...register('search')}
         />
         <input className="search-submit" type="submit" value="Search" />

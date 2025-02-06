@@ -2,25 +2,28 @@ import { useEffect, useState } from 'react';
 import './MainPage.css';
 import Search from '../../components/Search/Search';
 import CardList from '../../components/CardList/CardList';
-import { API, SEARCH_KEY } from '../../utils/constants';
+import { API } from '../../utils/constants';
 import { ApiResponse, CardInfo } from '../../types';
-import { getLsValue } from '../../utils/utils';
 import Loader from '../../components/Loader/Loader';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const MainPage = () => {
   const [items, setItems] = useState<CardInfo[]>([]);
   const [loading, setLoading] = useState(false);
+  const { setSearchValue, getSearchValue } = useLocalStorage();
 
   useEffect(() => {
     search();
   }, []);
 
-  const search = async () => {
+  const search = async (searchTerm?: string) => {
     setLoading(true);
-    fetch(API + getLsValue(SEARCH_KEY))
+    const lastSearch = searchTerm ?? getSearchValue();
+    fetch(API + lastSearch)
       .then((response) => response.json())
       .then((value: ApiResponse) => {
         setItems(value.results ?? []);
+        setSearchValue(lastSearch);
         setLoading(false);
       });
   };
