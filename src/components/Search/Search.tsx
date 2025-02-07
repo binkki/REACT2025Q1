@@ -5,13 +5,17 @@ type SearchFormFields = {
   search: string;
 };
 
-const Search = (props: { search: (searchTerm?: string) => Promise<void> }) => {
+type SearchProps = {
+  update: (newSearch: string | undefined, newPage: number) => void;
+};
+
+const Search = (props: SearchProps) => {
   const { register, handleSubmit } = useForm<SearchFormFields>();
-  const { search } = props;
+  const { update } = props;
   const { getSearchValue } = useLocalStorage();
 
   const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
-    search(data.search);
+    update(data.search, 1);
   };
 
   return (
