@@ -7,7 +7,7 @@ import { ApiResponse } from '../../types';
 import Loader from '../../components/Loader/Loader';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import Pagination from '../../components/Pagination/Pagination';
-import { useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 import { getNumberFromString } from '../../utils/utils';
 
 const MainPage = () => {
@@ -19,10 +19,12 @@ const MainPage = () => {
   const [isUpdate, setUpdate] = useState(false);
   const navigate = useNavigate();
   const { pageId } = useParams();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const currentPage = getNumberFromString(pageId);
     if (currentPage) update(undefined, currentPage);
+    else setError(true);
   }, []);
 
   useEffect(() => {
@@ -42,16 +44,22 @@ const MainPage = () => {
     fetch(url)
       .then((response) => response.json())
       .then((value: ApiResponse) => {
-        setResponse(value);
-        setSearchValue(searchTerm);
+        if (value.error) {
+          setError(true);
+        } else {
+          setResponse(value);
+          setSearchValue(searchTerm);
+        }
         setLoading(false);
       });
   };
 
-  return (
+  return error ? (
+    <Navigate to="error404" />
+  ) : (
     <div className="main-wrapper">
       <Search update={update} />
-      {loading ? (
+      {loading || !response ? (
         <Loader />
       ) : (
         <>
