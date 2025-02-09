@@ -2,6 +2,8 @@ import { ApiResponse, CardInfo, PageInfo } from '../types';
 
 export const testSearchTerm = 'Wubba Lubba Dub Dub!';
 
+export const testPageNumber = '6';
+
 export const testItems: CardInfo[] = [
   {
     id: 1,

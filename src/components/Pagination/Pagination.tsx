@@ -17,13 +17,14 @@ const Pagination = (props: PaginationProps) => {
   };
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination-container">
       {[...Array(totalPage).keys()].map((x: number) => {
         return (
           <span
             onClick={() => changePage(x + 1)}
             className={x + 1 === currentPage ? 'page current' : 'page'}
             key={x}
+            data-testid={`pagination-page-${x + 1}`}
           >
             {x + 1}
           </span>
