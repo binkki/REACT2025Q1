@@ -2,7 +2,7 @@ export const getNumberFromString = (
   value: string | undefined
 ): number | undefined => {
   const parsedValue = Number(value);
-  return !isNaN(parsedValue) && !isFloatNumber(parsedValue)
+  return !isNaN(parsedValue) && !isFloatNumber(parsedValue) && parsedValue > 0
     ? parsedValue
     : undefined;
 };
