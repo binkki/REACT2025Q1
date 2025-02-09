@@ -4,6 +4,7 @@ type LocationInfo = {
 };
 
 export type CardInfo = {
+  id: number;
   created: string;
   episode: string[];
   gender: string;

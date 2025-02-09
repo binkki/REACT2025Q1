@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import { CardInfo } from '../../types';
 import './Card.css';
-import { API } from '../../utils/constants';
 
 const Card = (props: { cardInfo: CardInfo }) => {
   const { cardInfo } = props;
@@ -9,7 +8,7 @@ const Card = (props: { cardInfo: CardInfo }) => {
   const navigate = useNavigate();
 
   const openDetails = () => {
-    const characterId = cardInfo.url.replace(API, '');
+    const characterId = cardInfo.id;
     if (detailsId) navigate(`/${pageId}`);
     else navigate(`/${pageId}/${characterId}`);
   };

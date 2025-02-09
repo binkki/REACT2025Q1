@@ -10,7 +10,7 @@ const CardList = (props: { cards: CardInfo[] }) => {
     <>
       <div className="card-flex">
         {cards.map((card: CardInfo) => (
-          <div key={card.url} className="card-item">
+          <div key={card.id} className="card-item">
             <Card cardInfo={card} />
           </div>
         ))}

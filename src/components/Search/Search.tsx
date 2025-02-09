@@ -26,11 +26,17 @@ const Search = (props: SearchProps) => {
       <form className="search-wrapper" onSubmit={handleSubmit(submitSearch)}>
         <input
           id="search-input"
+          data-testid="search-input"
           type="input"
           defaultValue={getSearchValue()}
           {...register('search')}
         />
-        <input className="search-submit" type="submit" value="Search" />
+        <input
+          data-testid="search-submit"
+          className="search-submit"
+          type="submit"
+          value="Search"
+        />
       </form>
     </>
   );
