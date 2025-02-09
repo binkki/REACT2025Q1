@@ -7,7 +7,7 @@ import { ApiResponse } from '../../types';
 import Loader from '../../components/Loader/Loader';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import Pagination from '../../components/Pagination/Pagination';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { Navigate, Outlet, useParams } from 'react-router';
 import { getNumberFromString } from '../../utils/utils';
 
 const MainPage = () => {
@@ -17,7 +17,6 @@ const MainPage = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState<string>(getSearchValue());
   const [isUpdate, setUpdate] = useState(false);
-  const navigate = useNavigate();
   const { pageId } = useParams();
   const [error, setError] = useState(false);
 
@@ -29,7 +28,6 @@ const MainPage = () => {
 
   useEffect(() => {
     search();
-    navigate(`/${page}`);
   }, [isUpdate]);
 
   const update = (newSearch: string | undefined, newPage: number) => {
@@ -55,7 +53,7 @@ const MainPage = () => {
   };
 
   return error ? (
-    <Navigate to="error404" />
+    <Navigate to="/error404" />
   ) : (
     <div className="main-wrapper">
       <Search update={update} />
@@ -63,7 +61,12 @@ const MainPage = () => {
         <Loader />
       ) : (
         <>
-          <CardList cards={response?.results ?? []} />
+          <div>
+            <div className="items-wrapper">
+              <CardList cards={response?.results ?? []} />
+              <Outlet />
+            </div>
+          </div>
           {response?.results?.length && response?.info && (
             <Pagination
               currentPage={page}

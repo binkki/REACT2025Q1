@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import './Pagination.css';
 
 type PaginationProps = {
@@ -8,9 +9,11 @@ type PaginationProps = {
 
 const Pagination = (props: PaginationProps) => {
   const { currentPage, totalPage, update } = props;
+  const navigate = useNavigate();
 
   const changePage = (newPage: number) => {
     update(undefined, newPage);
+    navigate(`/${newPage}`);
   };
 
   return (

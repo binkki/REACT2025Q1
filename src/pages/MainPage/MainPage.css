@@ -1,7 +1,15 @@
 .main-wrapper {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 20px);
+  min-height: calc(100vh - 20px);
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin: 0;
+  padding: 10px;
+}
+
+.items-wrapper {
+  display: flex;
+  gap: 10px;
+  min-height: calc(100vh - 110px);
 }

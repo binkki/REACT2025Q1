@@ -1,6 +1,7 @@
 export const EMPTY_SEARCH = '';
 export const SEARCH_KEY = 'last-search';
 export const API = 'https://rickandmortyapi.com/api/character/';
+export const API_EPISODE = 'https://rickandmortyapi.com/api/episode/';
 export const API_SEARCH = 'name=';
 export const API_PAGE = '?page=';
 export const LOADER_URL =

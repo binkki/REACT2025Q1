@@ -15,6 +15,7 @@ export type CardInfo = {
   status: string;
   type: string;
   url: string;
+  error?: string;
 };
 
 export type PageInfo = {

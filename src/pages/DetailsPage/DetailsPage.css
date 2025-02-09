@@ -1,0 +1,23 @@
+.details-wrapper {
+  position: sticky;
+  top: 0px;
+  right: 10px;
+  height: fit-content;
+  padding: 0;
+}
+
+.item-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.item-text {
+  align-self: flex-start;
+  text-align: start;
+}
