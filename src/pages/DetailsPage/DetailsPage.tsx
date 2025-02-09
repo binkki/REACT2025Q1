@@ -42,19 +42,29 @@ const DetailsPage = () => {
       {loading || !details ? (
         <Loader />
       ) : (
-        <div className="item-details-wrapper">
-          <img src={details.image} className="item-image" />
+        <div className="item-details-wrapper" data-testid={`details`}>
+          <img
+            src={details.image}
+            className="item-image"
+            data-testid={`details-image`}
+          />
           <span className="item-text">Name: {details.name}</span>
           <span className="item-text">Gender: {details.gender}</span>
           <span className="item-text">Species: {details.species}</span>
           <span className="item-text">Status: {details.status}</span>
-          <span className="item-text">Type: {details.type}</span>
+          {details.type && (
+            <span className="item-text">Type: {details.type}</span>
+          )}
           <span className="item-text">Origin: {details.origin.name}</span>
-          <span className="item-text">Location: {details.location.name}</span>
           <span className="item-text">
-            Episode: {details.episode[0].replace(API_EPISODE, '')}
+            Last known location: {details.location.name}
           </span>
-          <button onClick={() => closeDetails()}>Close</button>
+          <span className="item-text">
+            First seen in {details.episode[0].replace(API_EPISODE, '')} episode
+          </span>
+          <button data-testid={`details-close`} onClick={() => closeDetails()}>
+            Close
+          </button>
         </div>
       )}
     </div>
