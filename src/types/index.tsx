@@ -4,6 +4,7 @@ type LocationInfo = {
 };
 
 export type CardInfo = {
+  id: number;
   created: string;
   episode: string[];
   gender: string;
@@ -15,9 +16,10 @@ export type CardInfo = {
   status: string;
   type: string;
   url: string;
+  error?: string;
 };
 
-type PageInfo = {
+export type PageInfo = {
   count: number;
   next: string | null;
   pages: number;

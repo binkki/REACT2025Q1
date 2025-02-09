@@ -1,7 +1,10 @@
-import { EMPTY_SEARCH } from './constants';
+export const getNumberFromString = (
+  value: string | undefined
+): number | undefined => {
+  const parsedValue = Number(value);
+  return !isNaN(parsedValue) && !isFloatNumber(parsedValue) && parsedValue > 0
+    ? parsedValue
+    : undefined;
+};
 
-export const getLsValue = (lsKey: string): string =>
-  localStorage.getItem(lsKey) ?? EMPTY_SEARCH;
-
-export const setLsValue = (lsKey: string, newValue: string) =>
-  localStorage.setItem(lsKey, newValue);
+const isFloatNumber = (value: number): boolean => value % 1 !== 0;

@@ -1,6 +1,6 @@
 .loader {
-  width: 64px;
-  height: 64px;
+  width: 250px;
+  height: 250px;
   animation: rotation 2s linear infinite;
   align-self: center;
 }

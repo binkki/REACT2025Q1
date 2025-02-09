@@ -1,38 +1,45 @@
-import React from 'react';
-import { SEARCH_KEY } from '../../utils/constants';
-import { getLsValue, setLsValue } from '../../utils/utils';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useNavigate } from 'react-router';
 
-class Search extends React.Component {
-  searchValue: string;
+type SearchFormFields = {
+  search: string;
+};
 
-  constructor(props: object) {
-    super(props);
-    this.searchValue = getLsValue(SEARCH_KEY);
-    this.search = this.search.bind(this);
-    this.input = this.input.bind(this);
-  }
+type SearchProps = {
+  update: (newSearch: string | undefined, newPage: number) => void;
+};
 
-  search = () => {
-    setLsValue(SEARCH_KEY, this.searchValue);
+const Search = (props: SearchProps) => {
+  const { register, handleSubmit } = useForm<SearchFormFields>();
+  const { update } = props;
+  const { getSearchValue } = useLocalStorage();
+  const navigate = useNavigate();
+
+  const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
+    update(data.search, 1);
+    navigate('/1');
   };
 
-  input = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.searchValue = (e.target as HTMLInputElement).value;
-  };
-
-  render() {
-    return (
-      <form className="search-wrapper" onSubmit={this.search}>
+  return (
+    <>
+      <form className="search-wrapper" onSubmit={handleSubmit(submitSearch)}>
         <input
           id="search-input"
-          type="search"
-          onChange={this.input}
-          defaultValue={getLsValue(SEARCH_KEY)}
+          data-testid="search-input"
+          type="input"
+          defaultValue={getSearchValue()}
+          {...register('search')}
         />
-        <input className="search-submit" type="submit" value="Search" />
+        <input
+          data-testid="search-submit"
+          className="search-submit"
+          type="submit"
+          value="Search"
+        />
       </form>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default Search;

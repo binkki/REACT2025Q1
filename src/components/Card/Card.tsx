@@ -1,30 +1,30 @@
-import React from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { CardInfo } from '../../types';
 import './Card.css';
 
-class Card extends React.Component {
-  info: CardInfo;
+const Card = (props: { cardInfo: CardInfo }) => {
+  const { cardInfo } = props;
+  const { pageId, detailsId } = useParams();
+  const navigate = useNavigate();
 
-  constructor(props: { info: CardInfo }) {
-    super(props);
-    this.info = props.info;
-  }
+  const openDetails = () => {
+    const characterId = cardInfo.id;
+    if (detailsId) navigate(`/${pageId}`);
+    else navigate(`/${pageId}/${characterId}`);
+  };
 
-  render() {
-    return (
-      <div className="item-wrapper">
-        <div className="item-preview">
-          <img src={this.info.image} className="item-image" />
-          <div className="item-title">{this.info.name}</div>
-        </div>
-        <div>
-          <p className="item-text">Species: {this.info.species}</p>
-          <p className="item-text">Gender: {this.info.gender}</p>
-          <p className="item-text">Status: {this.info.status}</p>
-        </div>
+  return (
+    <div className="item-wrapper" onClick={() => openDetails()}>
+      <img
+        src={cardInfo.image}
+        className="item-image"
+        data-testid={`item-image-${cardInfo.id}`}
+      />
+      <div className="item-title" data-testid={`item-name-${cardInfo.id}`}>
+        {cardInfo.name}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Card;

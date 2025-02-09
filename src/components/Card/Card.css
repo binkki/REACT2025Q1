@@ -1,27 +1,26 @@
 .item-wrapper {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  width: 100%;
-  align-items: start;
+  width: 220px;
+  height: 250px;
+  align-items: center;
   padding: 10px;
-  border-bottom: 1px solid black;
-}
-
-.item-preview {
-  width: 100px;
-  overflow-wrap: break-word;
+  border: 1px solid black;
+  border-radius: 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #97ce4c;
+  }
 }
 
 .item-title {
   word-break: break-all;
+  font-size: 18px;
 }
 
 .item-image {
-  width: 100px;
-  height: 100px;
-}
-
-.item-text {
-  text-align: start;
-  margin-top: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 30px;
 }
