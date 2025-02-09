@@ -15,8 +15,14 @@ const Card = (props: { cardInfo: CardInfo }) => {
 
   return (
     <div className="item-wrapper" onClick={() => openDetails()}>
-      <img src={cardInfo.image} className="item-image" />
-      <div className="item-title">{cardInfo.name}</div>
+      <img
+        src={cardInfo.image}
+        className="item-image"
+        data-testid={`item-image-${cardInfo.id}`}
+      />
+      <div className="item-title" data-testid={`item-name-${cardInfo.id}`}>
+        {cardInfo.name}
+      </div>
     </div>
   );
 };
