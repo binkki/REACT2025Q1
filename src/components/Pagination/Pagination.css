@@ -23,7 +23,8 @@
 }
 
 .current {
-  border: 2px solid black;
+  border: 2px solid transparent;
+  background-color: #97ce4c;
   width: 25px;
   height: 25px;
 }

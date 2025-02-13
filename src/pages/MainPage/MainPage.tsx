@@ -9,6 +9,9 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import Pagination from '../../components/Pagination/Pagination';
 import { Navigate, Outlet, useParams } from 'react-router';
 import { getNumberFromString } from '../../utils/utils';
+import Flyout from '../../components/Flyout/Flyout';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const MainPage = () => {
   const [response, setResponse] = useState<ApiResponse>();
@@ -19,6 +22,9 @@ const MainPage = () => {
   const [isUpdate, setUpdate] = useState(false);
   const { pageId } = useParams();
   const [error, setError] = useState(false);
+  const bookmarkedCards = useSelector(
+    (state: RootState) => state.app.bookmarks
+  );
 
   useEffect(() => {
     const currentPage = getNumberFromString(pageId);
@@ -76,6 +82,7 @@ const MainPage = () => {
           )}
         </>
       )}
+      {bookmarkedCards.length > 0 && <Flyout data={bookmarkedCards} />}
     </div>
   );
 };
