@@ -6,6 +6,8 @@
   border: 1px solid black;
   background: white;
   width: 100px;
+  display: flex;
+  flex-direction: column;
   &:hover {
     cursor: default;
   }

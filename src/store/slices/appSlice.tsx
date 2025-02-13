@@ -17,9 +17,13 @@ export const appSlice = createSlice({
         (x: CardInfo) => x.id !== action.payload
       );
     },
+    removeAllBookmarks: (state) => {
+      state.bookmarks = [];
+    },
   },
 });
 
-export const { addBookmark, removeBookmark } = appSlice.actions;
+export const { addBookmark, removeBookmark, removeAllBookmarks } =
+  appSlice.actions;
 
 export default appSlice.reducer;
