@@ -31,3 +31,7 @@ export type ApiResponse = {
   info?: PageInfo;
   results?: CardInfo[];
 };
+
+export type AppSlice = {
+  bookmarks: CardInfo[];
+};
