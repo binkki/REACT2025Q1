@@ -35,3 +35,8 @@ export type ApiResponse = {
 export type AppSlice = {
   bookmarks: CardInfo[];
 };
+
+export type LinkAtributes = {
+  download: string;
+  href: string;
+};

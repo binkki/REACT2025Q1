@@ -1,3 +1,6 @@
+import { CardInfo } from '../types';
+import { CSV_HEADER } from './constants';
+
 export const getNumberFromString = (
   value: string | undefined
 ): number | undefined => {
@@ -8,3 +11,12 @@ export const getNumberFromString = (
 };
 
 const isFloatNumber = (value: number): boolean => value % 1 !== 0;
+
+export const generateCSVfromArray = (data: CardInfo[]): string =>
+  CSV_HEADER +
+  data
+    .map(
+      (x: CardInfo) =>
+        `${x.name}, ${x.status}, ${x.species}, ${x.gender}, ${x.origin.name}, ${x.url}\n`
+    )
+    .reduce((result, current) => result + current, '');

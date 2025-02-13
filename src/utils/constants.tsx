@@ -8,3 +8,5 @@ export const LOADER_URL =
   'https://i.postimg.cc/QMZQXVY6/png-clipart-rick-and-morty-hq-resource-rick-and-morty-removebg-preview.png';
 export const ERROR_MESSAGE = 'There is nothing here';
 export const NOTFOUND_URL = 'https://i.postimg.cc/QCgr3WPg/404.png';
+export const CSV_HEADER =
+  'Name, Status, Species, Gender, Origin location, Details url\n';
