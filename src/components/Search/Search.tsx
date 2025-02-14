@@ -2,27 +2,32 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { setPage, setSearchTerm } from '../../store/slices/appSlice';
+import { setParams } from '../../store/slices/appSlice';
+import { useEffect, useState } from 'react';
 
 type SearchFormFields = {
   search: string;
 };
 
-type SearchProps = {
-  update: () => void;
-};
-
-const Search = (props: SearchProps) => {
+const Search = () => {
   const { register, handleSubmit } = useForm<SearchFormFields>();
-  const { update } = props;
-  const { getSearchValue } = useLocalStorage();
+  const { setSearchValue, getSearchValue } = useLocalStorage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    setInputValue(getSearchValue());
+  }, []);
 
   const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
-    dispatch(setPage(1));
-    dispatch(setSearchTerm(data.search));
-    update();
+    setSearchValue(data.search);
+    dispatch(
+      setParams({
+        page: 1,
+        searchTerm: data.search,
+      })
+    );
     navigate('/1');
   };
 
@@ -33,7 +38,7 @@ const Search = (props: SearchProps) => {
           id="search-input"
           data-testid="search-input"
           type="input"
-          defaultValue={getSearchValue()}
+          defaultValue={inputValue}
           {...register('search')}
         />
         <input

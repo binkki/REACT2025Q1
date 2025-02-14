@@ -1,22 +1,24 @@
 import { useNavigate } from 'react-router';
 import './Pagination.css';
 import { useDispatch } from 'react-redux';
-import { setPage } from '../../store/slices/appSlice';
+import { setParams } from '../../store/slices/appSlice';
 
 type PaginationProps = {
   currentPage: number;
   totalPage: number;
-  update: () => void;
 };
 
 const Pagination = (props: PaginationProps) => {
-  const { currentPage, totalPage, update } = props;
+  const { currentPage, totalPage } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const changePage = (newPage: number) => {
-    dispatch(setPage(newPage));
-    update();
+    dispatch(
+      setParams({
+        page: newPage,
+      })
+    );
     navigate(`/${newPage}`);
   };
 
