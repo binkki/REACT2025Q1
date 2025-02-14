@@ -9,7 +9,7 @@ import { getNumberFromString } from '../../utils/utils';
 import Flyout from '../../components/Flyout/Flyout';
 import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { setError, setParams } from '../../store/slices/appSlice';
+import { setData, setError, setParams } from '../../store/slices/appSlice';
 import { useGetCardsQuery } from '../../store/api/rickApi';
 
 const MainPage = () => {
@@ -57,6 +57,15 @@ const MainPage = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    dispatch(
+      setData({
+        currentPageCards: data,
+        currentDetails: undefined,
+      })
+    );
+  }, [data]);
+
   return error ? (
     <Navigate to="/error404" />
   ) : (
@@ -68,13 +77,11 @@ const MainPage = () => {
         <>
           <div>
             <div className="items-wrapper">
-              <CardList cards={data.results ?? []} />
+              <CardList />
               <Outlet />
             </div>
           </div>
-          {data.results?.length && data.info && (
-            <Pagination currentPage={page} totalPage={data.info.pages} />
-          )}
+          {data.results?.length && data.info && <Pagination />}
         </>
       )}
       <Flyout />

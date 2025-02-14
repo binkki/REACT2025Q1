@@ -13,6 +13,10 @@ const initialState: AppSlice = {
     pageError: undefined,
     detailsError: undefined,
   },
+  data: {
+    currentPageCards: undefined,
+    currentDetails: undefined,
+  },
 };
 
 export const appSlice = createSlice({
@@ -42,6 +46,12 @@ export const appSlice = createSlice({
         ...action.payload,
       };
     },
+    setData: (state, action) => {
+      state.data = {
+        ...state.data,
+        ...action.payload,
+      };
+    },
   },
 });
 
@@ -51,6 +61,7 @@ export const {
   removeAllBookmarks,
   setParams,
   setError,
+  setData,
 } = appSlice.actions;
 
 export default appSlice.reducer;

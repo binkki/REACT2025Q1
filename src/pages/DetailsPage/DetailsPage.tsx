@@ -5,7 +5,7 @@ import Loader from '../../components/Loader/Loader';
 import './DetailsPage.css';
 import { useGetDetailsQuery } from '../../store/api/rickApi';
 import { getNumberFromString } from '../../utils/utils';
-import { setError, setParams } from '../../store/slices/appSlice';
+import { setData, setError, setParams } from '../../store/slices/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 
@@ -34,6 +34,14 @@ const DetailsPage = () => {
     };
     handlePageChange();
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      setData({
+        currentDetails: data,
+      })
+    );
+  }, [data]);
 
   const closeDetails = () => {
     navigate(`/${pageId}`);

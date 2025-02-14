@@ -43,6 +43,10 @@ export type AppSlice = {
     pageError: string | undefined;
     detailsError: string | undefined;
   };
+  data: {
+    currentPageCards: ApiResponse | undefined;
+    currentDetails: CardInfo | undefined;
+  };
 };
 
 export type LinkAtributes = {

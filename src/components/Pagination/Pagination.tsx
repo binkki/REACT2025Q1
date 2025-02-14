@@ -1,15 +1,14 @@
 import { useNavigate } from 'react-router';
 import './Pagination.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setParams } from '../../store/slices/appSlice';
+import { RootState } from '../../store/store';
 
-type PaginationProps = {
-  currentPage: number;
-  totalPage: number;
-};
-
-const Pagination = (props: PaginationProps) => {
-  const { currentPage, totalPage } = props;
+const Pagination = () => {
+  const currentPage = useSelector((state: RootState) => state.app.params.page);
+  const totalPage = useSelector(
+    (state: RootState) => state.app.data.currentPageCards?.info?.pages
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
