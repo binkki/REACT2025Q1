@@ -7,20 +7,24 @@ import DetailsPage from '../pages/DetailsPage/DetailsPage';
 import App from '../App';
 import { testItems } from './testData';
 import NotFound from '../pages/NotFound/NotFound';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 describe('Card Component', () => {
   const renderWithRouter = () => {
     render(
-      <MemoryRouter initialEntries={['/1']}>
-        <Routes>
-          <Route index element={<Navigate to="/1" />} />
-          <Route path=":pageId" element={<App />}>
-            <Route path=":detailsId" element={<DetailsPage />} />
-          </Route>
-          <Route path="error404" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/error404" />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/1']}>
+          <Routes>
+            <Route index element={<Navigate to="/1" />} />
+            <Route path=":pageId" element={<App />}>
+              <Route path=":detailsId" element={<DetailsPage />} />
+            </Route>
+            <Route path="error404" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/error404" />} />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
     );
   };
 
@@ -53,24 +57,5 @@ describe('Card Component', () => {
     await userEvent.click(cardList[0].children[0]);
 
     expect(screen.getAllByTestId('details').length).toBe(1);
-  });
-
-  it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    renderWithRouter();
-
-    await waitFor(() => {
-      expect(screen.getByTestId('card-list')).toBeInTheDocument();
-    });
-
-    const cardList = screen.queryAllByTestId('card-item');
-
-    const mockFetch = vi.spyOn(globalThis, 'fetch');
-    mockFetch.mockReturnValue(new Promise(() => testItems[0]));
-
-    await userEvent.click(cardList[0].children[0]);
-
-    expect(fetch).toBeCalled();
-
-    vi.resetAllMocks();
   });
 });

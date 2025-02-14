@@ -7,6 +7,8 @@ import DetailsPage from '../pages/DetailsPage/DetailsPage';
 import App from '../App';
 import { testPageNumber } from './testData';
 import NotFound from '../pages/NotFound/NotFound';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 describe('Pagination Component', () => {
   const routes = [
@@ -40,7 +42,11 @@ describe('Pagination Component', () => {
   });
 
   it('Make sure the component updates URL query parameter when page changes', async () => {
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
 
     await waitFor(() => {
       expect(screen.getByTestId('pagination-container')).toBeInTheDocument();

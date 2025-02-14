@@ -1,20 +1,18 @@
 import '@testing-library/jest-dom';
 import { describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { testItems } from './testData';
-import { ERROR_MESSAGE } from '../utils/constants';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Navigate, Route, Routes } from 'react-router';
-import { Provider } from 'react-redux';
-import App from '../App';
 import DetailsPage from '../pages/DetailsPage/DetailsPage';
+import App from '../App';
 import NotFound from '../pages/NotFound/NotFound';
+import { Provider } from 'react-redux';
 import { store } from '../store/store';
 
-describe('Card List Component', () => {
+describe('Not Found Page', () => {
   const renderWithRouter = () => {
     render(
       <Provider store={store}>
-        <MemoryRouter initialEntries={['/1']}>
+        <MemoryRouter initialEntries={['/invalid_value']}>
           <Routes>
             <Route index element={<Navigate to="/1" />} />
             <Route path=":pageId" element={<App />}>
@@ -28,17 +26,9 @@ describe('Card List Component', () => {
     );
   };
 
-  it('Verify that the component renders the specified number of cards', async () => {
+  it('App redirects to Not Found page for unvalid page number in URL', async () => {
     renderWithRouter();
-
-    await waitFor(() => {
-      expect(screen.getByTestId('card-list')).toBeInTheDocument();
-    });
-
-    const cardList = screen.queryAllByTestId('card-item');
-    const errorMessage = screen.queryAllByText(ERROR_MESSAGE);
-
-    expect(cardList.length).toBe(testItems.length);
-    expect(errorMessage.length).toBe(0);
+    expect(screen.getByTestId('not-found')).toBeInTheDocument();
+    expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
   });
 });

@@ -43,14 +43,16 @@ const Flyout = () => {
 
   return (
     bookmarkedCards.length > 0 && (
-      <>
+      <div data-testid={'flyout'}>
         <a ref={linkRef} href={link.href} download={link.download} />
         <div className="flyout">
           <span>{flyoutText}</span>
-          <button onClick={() => unselectAll()}>Unselect all</button>
+          <button onClick={() => unselectAll()} data-testid={'flyout-unselect'}>
+            Unselect all
+          </button>
           <button onClick={() => download()}>Download</button>
         </div>
-      </>
+      </div>
     )
   );
 };

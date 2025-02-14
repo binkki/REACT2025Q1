@@ -54,6 +54,7 @@ const Card = (props: { cardInfo: CardInfo }) => {
       <button
         ref={bookmarkRef}
         className={`bookmark-button ${bookmarked ? 'bookmarked' : ''}`}
+        data-testid="bookmark"
       />
     </div>
   );
