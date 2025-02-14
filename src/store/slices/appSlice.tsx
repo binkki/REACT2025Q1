@@ -7,6 +7,11 @@ const initialState: AppSlice = {
   params: {
     page: 1,
     searchTerm: localStorage.getItem(SEARCH_KEY) ?? '',
+    details: '1',
+  },
+  error: {
+    pageError: undefined,
+    detailsError: undefined,
   },
 };
 
@@ -31,10 +36,21 @@ export const appSlice = createSlice({
         ...action.payload,
       };
     },
+    setError: (state, action) => {
+      state.error = {
+        ...state.error,
+        ...action.payload,
+      };
+    },
   },
 });
 
-export const { addBookmark, removeBookmark, removeAllBookmarks, setParams } =
-  appSlice.actions;
+export const {
+  addBookmark,
+  removeBookmark,
+  removeAllBookmarks,
+  setParams,
+  setError,
+} = appSlice.actions;
 
 export default appSlice.reducer;

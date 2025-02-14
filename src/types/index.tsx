@@ -37,6 +37,11 @@ export type AppSlice = {
   params: {
     page: number;
     searchTerm: string;
+    details: string;
+  };
+  error: {
+    pageError: string | undefined;
+    detailsError: string | undefined;
   };
 };
 

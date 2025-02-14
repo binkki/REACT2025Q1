@@ -9,7 +9,7 @@ export const rickApi = createApi({
     getCards: build.query<ApiResponse, { searchTerm: string; page: number }>({
       query: ({ searchTerm, page }) => `?page=${page}&name=${searchTerm}`,
     }),
-    getDetails: build.query<CardInfo, { id: number }>({
+    getDetails: build.query<CardInfo, { id: string }>({
       query: ({ id }) => `/${id}`,
     }),
   }),

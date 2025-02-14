@@ -9,7 +9,7 @@ import { getNumberFromString } from '../../utils/utils';
 import Flyout from '../../components/Flyout/Flyout';
 import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { setParams } from '../../store/slices/appSlice';
+import { setError, setParams } from '../../store/slices/appSlice';
 import { useGetCardsQuery } from '../../store/api/rickApi';
 
 const MainPage = () => {
@@ -29,6 +29,12 @@ const MainPage = () => {
     const handlePageChange = async () => {
       const currentPage = getNumberFromString(pageId);
       if (!currentPage) {
+        dispatch(
+          setError({
+            pageError: 'Wrong page',
+            detailsError: undefined,
+          })
+        );
         return navigate('/error404');
       } else
         dispatch(
@@ -39,6 +45,17 @@ const MainPage = () => {
     };
     handlePageChange();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      dispatch(
+        setError({
+          pageError: 'Wrong search term',
+          detailsError: undefined,
+        })
+      );
+    }
+  }, [error]);
 
   return error ? (
     <Navigate to="/error404" />
