@@ -34,6 +34,8 @@ export type ApiResponse = {
 
 export type AppSlice = {
   bookmarks: CardInfo[];
+  page: number;
+  searchTerm: string;
 };
 
 export type LinkAtributes = {

@@ -1,13 +1,15 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setPage, setSearchTerm } from '../../store/slices/appSlice';
 
 type SearchFormFields = {
   search: string;
 };
 
 type SearchProps = {
-  update: (newSearch: string | undefined, newPage: number) => void;
+  update: () => void;
 };
 
 const Search = (props: SearchProps) => {
@@ -15,9 +17,12 @@ const Search = (props: SearchProps) => {
   const { update } = props;
   const { getSearchValue } = useLocalStorage();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
-    update(data.search, 1);
+    dispatch(setPage(1));
+    dispatch(setSearchTerm(data.search));
+    update();
     navigate('/1');
   };
 

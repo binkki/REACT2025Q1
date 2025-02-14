@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppSlice, CardInfo } from '../../types';
+import { SEARCH_KEY } from '../../utils/constants';
 
 const initialState: AppSlice = {
   bookmarks: [],
+  page: 1,
+  searchTerm: localStorage.getItem(SEARCH_KEY) ?? '',
 };
 
 export const appSlice = createSlice({
@@ -20,10 +23,21 @@ export const appSlice = createSlice({
     removeAllBookmarks: (state) => {
       state.bookmarks = [];
     },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
-export const { addBookmark, removeBookmark, removeAllBookmarks } =
-  appSlice.actions;
+export const {
+  addBookmark,
+  removeBookmark,
+  removeAllBookmarks,
+  setPage,
+  setSearchTerm,
+} = appSlice.actions;
 
 export default appSlice.reducer;

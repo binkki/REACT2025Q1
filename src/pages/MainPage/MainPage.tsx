@@ -10,30 +10,34 @@ import Pagination from '../../components/Pagination/Pagination';
 import { Navigate, Outlet, useParams } from 'react-router';
 import { getNumberFromString } from '../../utils/utils';
 import Flyout from '../../components/Flyout/Flyout';
+import { RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPage } from '../../store/slices/appSlice';
 
 const MainPage = () => {
   const [response, setResponse] = useState<ApiResponse>();
   const [loading, setLoading] = useState(false);
-  const { setSearchValue, getSearchValue } = useLocalStorage();
-  const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState<string>(getSearchValue());
   const [isUpdate, setUpdate] = useState(false);
+  const { setSearchValue } = useLocalStorage();
   const { pageId } = useParams();
   const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const page = useSelector((state: RootState) => state.app.page);
+  const searchTerm = useSelector((state: RootState) => state.app.searchTerm);
 
   useEffect(() => {
     const currentPage = getNumberFromString(pageId);
-    if (currentPage) update(undefined, currentPage);
-    else setError(true);
+    if (currentPage) {
+      dispatch(setPage(currentPage));
+      update();
+    } else setError(true);
   }, []);
 
   useEffect(() => {
     search();
   }, [isUpdate]);
 
-  const update = (newSearch: string | undefined, newPage: number) => {
-    if (newSearch !== undefined) setSearchTerm(newSearch);
-    setPage(newPage);
+  const update = () => {
     setUpdate(!isUpdate);
   };
 
