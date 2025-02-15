@@ -50,7 +50,7 @@ const Flyout = () => {
           download={link.download}
           data-testid={'flyout-link'}
         />
-        <div className="flyout">
+        <div className="flex-column flyout">
           <span>{flyoutText}</span>
           <button onClick={() => unselectAll()} data-testid={'flyout-unselect'}>
             Unselect all

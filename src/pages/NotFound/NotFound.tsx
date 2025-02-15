@@ -26,8 +26,8 @@ const NotFound = () => {
   }, []);
 
   return (
-    <div className="error-wrapper" data-testid={'not-found'}>
-      <img className="error-image" src={NOTFOUND_URL} />
+    <div className="flex-row error-wrapper" data-testid={'not-found'}>
+      <img src={NOTFOUND_URL} />
     </div>
   );
 };

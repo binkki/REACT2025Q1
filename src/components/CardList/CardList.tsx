@@ -12,7 +12,7 @@ const CardList = () => {
 
   return cards && cards?.length > 0 ? (
     <>
-      <div className="card-flex" data-testid={'card-list'}>
+      <div className="flex-row card-flex" data-testid={'card-list'}>
         {cards.map((card: CardInfo) => (
           <div key={card.id} className="card-item" data-testid={'card-item'}>
             <Card cardInfo={card} />

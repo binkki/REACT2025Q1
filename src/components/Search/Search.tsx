@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setParams } from '../../store/slices/appSlice';
 import { useEffect, useState } from 'react';
+import './Search.css';
 
 type SearchFormFields = {
   search: string;
@@ -33,7 +34,10 @@ const Search = () => {
 
   return (
     <>
-      <form className="search-wrapper" onSubmit={handleSubmit(submitSearch)}>
+      <form
+        className="flex-row search-wrapper"
+        onSubmit={handleSubmit(submitSearch)}
+      >
         <input
           id="search-input"
           data-testid="search-input"
@@ -41,12 +45,7 @@ const Search = () => {
           defaultValue={inputValue}
           {...register('search')}
         />
-        <input
-          data-testid="search-submit"
-          className="search-submit"
-          type="submit"
-          value="Search"
-        />
+        <button data-testid="search-submit">Search</button>
       </form>
     </>
   );

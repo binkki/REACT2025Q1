@@ -53,3 +53,8 @@ export type LinkAtributes = {
   download: string;
   href: string;
 };
+
+export enum AppTheme {
+  light = 'light',
+  dark = 'dark',
+}

@@ -1,6 +1,5 @@
 .card-flex {
   flex: 1;
-  display: flex;
   column-gap: 20px;
   flex-wrap: wrap;
   justify-content: center;

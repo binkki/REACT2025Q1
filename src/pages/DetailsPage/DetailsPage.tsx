@@ -54,7 +54,10 @@ const DetailsPage = () => {
       {isLoading || !data ? (
         <Loader />
       ) : (
-        <div className="item-details-wrapper" data-testid={`details`}>
+        <div
+          className="flex-column item-details-wrapper"
+          data-testid={`details`}
+        >
           <img
             src={data.image}
             className="item-image"

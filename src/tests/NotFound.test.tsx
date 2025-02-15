@@ -7,21 +7,24 @@ import App from '../App';
 import NotFound from '../pages/NotFound/NotFound';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
+import { ThemeProvider } from '../context/themeContext';
 
 describe('Not Found Page', () => {
   const renderWithRouter = () => {
     render(
       <Provider store={store}>
-        <MemoryRouter initialEntries={['/invalid_value']}>
-          <Routes>
-            <Route index element={<Navigate to="/1" />} />
-            <Route path=":pageId" element={<App />}>
-              <Route path=":detailsId" element={<DetailsPage />} />
-            </Route>
-            <Route path="error404" element={<NotFound />} />
-            <Route path="*" element={<Navigate to="/error404" />} />
-          </Routes>
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/invalid_value']}>
+            <Routes>
+              <Route index element={<Navigate to="/1" />} />
+              <Route path=":pageId" element={<App />}>
+                <Route path=":detailsId" element={<DetailsPage />} />
+              </Route>
+              <Route path="error404" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/error404" />} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
       </Provider>
     );
   };

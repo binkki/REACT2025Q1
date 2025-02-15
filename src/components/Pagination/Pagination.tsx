@@ -22,7 +22,7 @@ const Pagination = () => {
   };
 
   return (
-    <div className="pagination" data-testid="pagination-container">
+    <div className="flex-row pagination" data-testid="pagination-container">
       {[...Array(totalPage).keys()].map((x: number) => {
         return (
           <span

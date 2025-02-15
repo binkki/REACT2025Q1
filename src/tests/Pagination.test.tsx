@@ -9,6 +9,7 @@ import { testPageNumber } from './testData';
 import NotFound from '../pages/NotFound/NotFound';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
+import { ThemeProvider } from '../context/themeContext';
 
 describe('Pagination Component', () => {
   const routes = [
@@ -44,7 +45,9 @@ describe('Pagination Component', () => {
   it('Make sure the component updates URL query parameter when page changes', async () => {
     render(
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </Provider>
     );
 

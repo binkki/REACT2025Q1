@@ -11,6 +11,7 @@ import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData, setError, setParams } from '../../store/slices/appSlice';
 import { useGetCardsQuery } from '../../store/api/rickApi';
+import ThemeButton from '../../components/ThemeButton/ThemeButton';
 
 const MainPage = () => {
   const { pageId } = useParams();
@@ -69,14 +70,17 @@ const MainPage = () => {
   return error ? (
     <Navigate to="/error404" />
   ) : (
-    <div className="main-wrapper">
-      <Search />
+    <div className="flex-column main-wrapper">
+      <div className="flex-row">
+        <Search />
+        <ThemeButton />
+      </div>
       {isLoading || !data ? (
         <Loader />
       ) : (
         <>
           <div>
-            <div className="items-wrapper">
+            <div className="flex-row items-wrapper">
               <CardList />
               <Outlet />
             </div>
