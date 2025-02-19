@@ -58,6 +58,11 @@ const DetailsPage = () => {
   }, [data]);
 
   const closeDetails = () => {
+    dispatch(
+      setData({
+        currentDetails: undefined,
+      })
+    );
     navigate(`/${pageId}`);
   };
 

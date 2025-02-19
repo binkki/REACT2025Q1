@@ -3,7 +3,11 @@ import { useNavigate, useParams } from 'react-router';
 import { CardInfo } from '../../types';
 import './Card.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBookmark, removeBookmark } from '../../store/slices/appSlice';
+import {
+  addBookmark,
+  removeBookmark,
+  setData,
+} from '../../store/slices/appSlice';
 import { RootState } from '../../store/store';
 
 const Card = (props: { cardInfo: CardInfo }) => {
@@ -35,8 +39,15 @@ const Card = (props: { cardInfo: CardInfo }) => {
 
   const openDetails = () => {
     const characterId = cardInfo.id;
-    if (detailsId) navigate(`/${pageId}`);
-    else navigate(`/${pageId}/${characterId}`);
+    if (!detailsId) navigate(`/${pageId}/${characterId}`);
+    else {
+      dispatch(
+        setData({
+          currentDetails: undefined,
+        })
+      );
+      navigate(`/${pageId}`);
+    }
   };
 
   return (
