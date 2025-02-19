@@ -3,11 +3,9 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 const App = () => {
   return (
-    <>
-      <ErrorBoundary>
-        <MainPage />
-      </ErrorBoundary>
-    </>
+    <ErrorBoundary>
+      <MainPage />
+    </ErrorBoundary>
   );
 };
 

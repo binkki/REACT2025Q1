@@ -31,3 +31,30 @@ export type ApiResponse = {
   info?: PageInfo;
   results?: CardInfo[];
 };
+
+export type AppSlice = {
+  bookmarks: CardInfo[];
+  params: {
+    page: number;
+    searchTerm: string;
+    details: string;
+  };
+  error: {
+    pageError: string | undefined;
+    detailsError: string | undefined;
+  };
+  data: {
+    currentPageCards: ApiResponse | undefined;
+    currentDetails: CardInfo | undefined;
+  };
+};
+
+export type LinkAtributes = {
+  download: string;
+  href: string;
+};
+
+export enum AppTheme {
+  light = 'light',
+  dark = 'dark',
+}

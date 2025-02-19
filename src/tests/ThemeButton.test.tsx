@@ -5,13 +5,14 @@ import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter, Navigate, Route, Routes } from 'react-router';
 import DetailsPage from '../pages/DetailsPage/DetailsPage';
 import App from '../App';
-import { testItems } from './testData';
 import NotFound from '../pages/NotFound/NotFound';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
+import { THEME_KEY } from '../utils/constants';
+import { AppTheme } from '../types';
 import { ThemeProvider } from '../context/themeContext';
 
-describe('Card Component', () => {
+describe('Theme Button', () => {
   const renderWithRouter = () => {
     render(
       <Provider store={store}>
@@ -31,34 +32,17 @@ describe('Card Component', () => {
     );
   };
 
-  it('Ensure that the card component renders the relevant card data', async () => {
+  it('Should change page theme on button click', async () => {
     renderWithRouter();
 
-    await waitFor(() => {
-      expect(screen.getByTestId('card-list')).toBeInTheDocument();
+    const themeButton = await waitFor(() => {
+      return screen.findByTestId('theme-checkbox');
     });
 
-    for (let i = 0; i < testItems.length; i += 1) {
-      expect(
-        screen.getByTestId(`item-image-${testItems[i].id}`)
-      ).toHaveAttribute('src', testItems[i].image);
-      expect(screen.getByTestId(`item-name-${testItems[i].id}`).innerHTML).toBe(
-        testItems[i].name
-      );
-    }
-  });
+    await userEvent.click(themeButton);
+    expect(localStorage.getItem(THEME_KEY)).toBe(AppTheme.dark);
 
-  it('Validate that clicking on a card opens a detailed card component', async () => {
-    renderWithRouter();
-
-    await waitFor(() => {
-      expect(screen.getByTestId('card-list')).toBeInTheDocument();
-    });
-
-    const cardList = screen.queryAllByTestId('card-item');
-
-    await userEvent.click(cardList[0].children[0]);
-
-    expect(screen.getAllByTestId('details').length).toBe(1);
+    await userEvent.click(themeButton);
+    expect(localStorage.getItem(THEME_KEY)).toBe(AppTheme.light);
   });
 });

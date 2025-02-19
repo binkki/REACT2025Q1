@@ -1,42 +1,51 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setParams } from '../../store/slices/appSlice';
+import { useEffect, useState } from 'react';
+import './Search.css';
 
 type SearchFormFields = {
   search: string;
 };
 
-type SearchProps = {
-  update: (newSearch: string | undefined, newPage: number) => void;
-};
-
-const Search = (props: SearchProps) => {
+const Search = () => {
   const { register, handleSubmit } = useForm<SearchFormFields>();
-  const { update } = props;
-  const { getSearchValue } = useLocalStorage();
+  const { setSearchValue, getSearchValue } = useLocalStorage();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    setInputValue(getSearchValue());
+  }, []);
 
   const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
-    update(data.search, 1);
+    setSearchValue(data.search);
+    dispatch(
+      setParams({
+        page: 1,
+        searchTerm: data.search,
+      })
+    );
     navigate('/1');
   };
 
   return (
     <>
-      <form className="search-wrapper" onSubmit={handleSubmit(submitSearch)}>
+      <form
+        className="flex-row search-wrapper"
+        onSubmit={handleSubmit(submitSearch)}
+      >
         <input
           id="search-input"
           data-testid="search-input"
           type="input"
-          defaultValue={getSearchValue()}
+          defaultValue={inputValue}
           {...register('search')}
         />
-        <input
-          data-testid="search-submit"
-          className="search-submit"
-          type="submit"
-          value="Search"
-        />
+        <button data-testid="search-submit">Search</button>
       </form>
     </>
   );

@@ -1,0 +1,14 @@
+.flyout {
+  position: fixed;
+  z-index: 100;
+  bottom: 50px;
+  right: 20px;
+  border: 1px solid black;
+  background: white;
+  width: 150px;
+  padding: 10px;
+  gap: 10px;
+  &:hover {
+    cursor: default;
+  }
+}

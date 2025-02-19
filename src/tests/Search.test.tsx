@@ -8,20 +8,27 @@ import App from '../App';
 import { testSearchTerm } from './testData';
 import { EMPTY_SEARCH, SEARCH_KEY } from '../utils/constants';
 import NotFound from '../pages/NotFound/NotFound';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
+import { ThemeProvider } from '../context/themeContext';
 
 describe('Search Component', () => {
   const renderWithRouter = () => {
     render(
-      <MemoryRouter initialEntries={['/1']}>
-        <Routes>
-          <Route index element={<Navigate to="/1" />} />
-          <Route path=":pageId" element={<App />}>
-            <Route path=":detailsId" element={<DetailsPage />} />
-          </Route>
-          <Route path="error404" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/error404" />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/1']}>
+            <Routes>
+              <Route index element={<Navigate to="/1" />} />
+              <Route path=":pageId" element={<App />}>
+                <Route path=":detailsId" element={<DetailsPage />} />
+              </Route>
+              <Route path="error404" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/error404" />} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
   };
 

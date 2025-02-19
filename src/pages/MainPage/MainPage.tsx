@@ -1,81 +1,91 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './MainPage.css';
 import Search from '../../components/Search/Search';
 import CardList from '../../components/CardList/CardList';
-import { API, API_PAGE, API_SEARCH } from '../../utils/constants';
-import { ApiResponse } from '../../types';
 import Loader from '../../components/Loader/Loader';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import Pagination from '../../components/Pagination/Pagination';
-import { Navigate, Outlet, useParams } from 'react-router';
+import { Navigate, Outlet, useNavigate, useParams } from 'react-router';
 import { getNumberFromString } from '../../utils/utils';
+import Flyout from '../../components/Flyout/Flyout';
+import { RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData, setError, setParams } from '../../store/slices/appSlice';
+import { useGetCardsQuery } from '../../store/api/rickApi';
+import ThemeButton from '../../components/ThemeButton/ThemeButton';
+import { PAGE_NUMBER_ERROR, SEARCH_TERM_ERROR } from '../../utils/constants';
 
 const MainPage = () => {
-  const [response, setResponse] = useState<ApiResponse>();
-  const [loading, setLoading] = useState(false);
-  const { setSearchValue, getSearchValue } = useLocalStorage();
-  const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState<string>(getSearchValue());
-  const [isUpdate, setUpdate] = useState(false);
   const { pageId } = useParams();
-  const [error, setError] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const page = useSelector((state: RootState) => state.app.params.page);
+  const searchTerm = useSelector(
+    (state: RootState) => state.app.params.searchTerm
+  );
+  const { data, isLoading, error } = useGetCardsQuery({
+    searchTerm,
+    page,
+  });
 
   useEffect(() => {
-    const currentPage = getNumberFromString(pageId);
-    if (currentPage) update(undefined, currentPage);
-    else setError(true);
+    const handlePageChange = async () => {
+      const currentPage = getNumberFromString(pageId);
+      if (!currentPage) {
+        dispatch(
+          setError({
+            pageError: PAGE_NUMBER_ERROR,
+            detailsError: undefined,
+          })
+        );
+        return navigate('/error404');
+      } else
+        dispatch(
+          setParams({
+            page: currentPage,
+          })
+        );
+    };
+    handlePageChange();
   }, []);
 
   useEffect(() => {
-    search();
-  }, [isUpdate]);
+    if (error) {
+      dispatch(
+        setError({
+          pageError: SEARCH_TERM_ERROR,
+          detailsError: undefined,
+        })
+      );
+    }
+  }, [error]);
 
-  const update = (newSearch: string | undefined, newPage: number) => {
-    if (newSearch !== undefined) setSearchTerm(newSearch);
-    setPage(newPage);
-    setUpdate(!isUpdate);
-  };
+  useEffect(() => {
+    dispatch(
+      setData({
+        currentPageCards: data,
+        currentDetails: undefined,
+      })
+    );
+  }, [data]);
 
-  const search = async () => {
-    setLoading(true);
-    const url = `${API}${API_PAGE}${page}&${API_SEARCH}${searchTerm}`;
-    fetch(url)
-      .then((response) => response.json())
-      .then((value: ApiResponse) => {
-        if (value.error) {
-          setError(true);
-        } else {
-          setResponse(value);
-          setSearchValue(searchTerm);
-        }
-        setLoading(false);
-      });
-  };
+  if (error) return <Navigate to="/error404" />;
 
-  return error ? (
-    <Navigate to="/error404" />
-  ) : (
-    <div className="main-wrapper">
-      <Search update={update} />
-      {loading || !response ? (
-        <Loader />
-      ) : (
-        <>
-          <div>
-            <div className="items-wrapper">
-              <CardList cards={response?.results ?? []} />
-              <Outlet />
-            </div>
-          </div>
-          {response?.results?.length && response?.info && (
-            <Pagination
-              currentPage={page}
-              totalPage={response.info.pages}
-              update={update}
-            />
-          )}
-        </>
-      )}
+  if (isLoading || !data) return <Loader />;
+
+  return (
+    <div className="flex-column main-wrapper">
+      <div className="flex-row">
+        <Search />
+        <ThemeButton />
+      </div>
+      <div>
+        <div className="flex-row items-wrapper">
+          <CardList />
+          <Outlet />
+        </div>
+      </div>
+      {data.results?.length && data.info && <Pagination />}
+      <Flyout />
     </div>
   );
 };
