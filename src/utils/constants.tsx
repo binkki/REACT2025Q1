@@ -11,3 +11,6 @@ export const ERROR_MESSAGE = 'There is nothing here';
 export const NOTFOUND_URL = 'https://i.postimg.cc/0QsxrXhK/404.png';
 export const CSV_HEADER =
   'Name, Status, Species, Gender, Origin location, Details url\n';
+export const PAGE_NUMBER_ERROR = 'Wrong page';
+export const SEARCH_TERM_ERROR = 'Wrong search term';
+export const DETAILS_PAGE_ERROR = 'Wrong details id';

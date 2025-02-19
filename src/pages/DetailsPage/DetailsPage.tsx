@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router';
-import { API_EPISODE } from '../../utils/constants';
+import {
+  API_EPISODE,
+  DETAILS_PAGE_ERROR,
+  PAGE_NUMBER_ERROR,
+} from '../../utils/constants';
 import Loader from '../../components/Loader/Loader';
 import './DetailsPage.css';
 import { useGetDetailsQuery } from '../../store/api/rickApi';
@@ -23,8 +27,8 @@ const DetailsPage = () => {
       if (!currentPageId || !currentDetailsId) {
         dispatch(
           setError({
-            pageError: !currentPageId ? 'Wrong page' : undefined,
-            detailsError: !currentDetailsId ? 'Wrong details id' : undefined,
+            pageError: !currentPageId ? PAGE_NUMBER_ERROR : undefined,
+            detailsError: !currentDetailsId ? DETAILS_PAGE_ERROR : undefined,
           })
         );
         return navigate('/error404');
@@ -34,6 +38,16 @@ const DetailsPage = () => {
     };
     handlePageChange();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      dispatch(
+        setError({
+          detailsError: DETAILS_PAGE_ERROR,
+        })
+      );
+    }
+  }, [error]);
 
   useEffect(() => {
     dispatch(
@@ -47,39 +61,34 @@ const DetailsPage = () => {
     navigate(`/${pageId}`);
   };
 
-  return error ? (
-    <Navigate to="/error404" />
-  ) : (
+  if (error) return <Navigate to="/error404" />;
+
+  if (isLoading || !data) return <Loader />;
+
+  return (
     <div className="details-wrapper">
-      {isLoading || !data ? (
-        <Loader />
-      ) : (
-        <div
-          className="flex-column item-details-wrapper"
-          data-testid={`details`}
-        >
-          <img
-            src={data.image}
-            className="item-image"
-            data-testid={`details-image`}
-          />
-          <span className="item-text">Name: {data.name}</span>
-          <span className="item-text">Gender: {data.gender}</span>
-          <span className="item-text">Species: {data.species}</span>
-          <span className="item-text">Status: {data.status}</span>
-          {data.type && <span className="item-text">Type: {data.type}</span>}
-          <span className="item-text">Origin: {data.origin.name}</span>
-          <span className="item-text">
-            Last known location: {data.location.name}
-          </span>
-          <span className="item-text">
-            First seen in {data.episode[0].replace(API_EPISODE, '')} episode
-          </span>
-          <button data-testid={`details-close`} onClick={() => closeDetails()}>
-            Close
-          </button>
-        </div>
-      )}
+      <div className="flex-column item-details-wrapper" data-testid={`details`}>
+        <img
+          src={data.image}
+          className="item-image"
+          data-testid={`details-image`}
+        />
+        <span className="item-text">Name: {data.name}</span>
+        <span className="item-text">Gender: {data.gender}</span>
+        <span className="item-text">Species: {data.species}</span>
+        <span className="item-text">Status: {data.status}</span>
+        {data.type && <span className="item-text">Type: {data.type}</span>}
+        <span className="item-text">Origin: {data.origin.name}</span>
+        <span className="item-text">
+          Last known location: {data.location.name}
+        </span>
+        <span className="item-text">
+          First seen in {data.episode[0].replace(API_EPISODE, '')} episode
+        </span>
+        <button data-testid={`details-close`} onClick={() => closeDetails()}>
+          Close
+        </button>
+      </div>
     </div>
   );
 };

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setData, setError, setParams } from '../../store/slices/appSlice';
 import { useGetCardsQuery } from '../../store/api/rickApi';
 import ThemeButton from '../../components/ThemeButton/ThemeButton';
+import { PAGE_NUMBER_ERROR, SEARCH_TERM_ERROR } from '../../utils/constants';
 
 const MainPage = () => {
   const { pageId } = useParams();
@@ -32,7 +33,7 @@ const MainPage = () => {
       if (!currentPage) {
         dispatch(
           setError({
-            pageError: 'Wrong page',
+            pageError: PAGE_NUMBER_ERROR,
             detailsError: undefined,
           })
         );
@@ -51,7 +52,7 @@ const MainPage = () => {
     if (error) {
       dispatch(
         setError({
-          pageError: 'Wrong search term',
+          pageError: SEARCH_TERM_ERROR,
           detailsError: undefined,
         })
       );
@@ -67,27 +68,23 @@ const MainPage = () => {
     );
   }, [data]);
 
-  return error ? (
-    <Navigate to="/error404" />
-  ) : (
+  if (error) return <Navigate to="/error404" />;
+
+  if (isLoading || !data) return <Loader />;
+
+  return (
     <div className="flex-column main-wrapper">
       <div className="flex-row">
         <Search />
         <ThemeButton />
       </div>
-      {isLoading || !data ? (
-        <Loader />
-      ) : (
-        <>
-          <div>
-            <div className="flex-row items-wrapper">
-              <CardList />
-              <Outlet />
-            </div>
-          </div>
-          {data.results?.length && data.info && <Pagination />}
-        </>
-      )}
+      <div>
+        <div className="flex-row items-wrapper">
+          <CardList />
+          <Outlet />
+        </div>
+      </div>
+      {data.results?.length && data.info && <Pagination />}
       <Flyout />
     </div>
   );

@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { EMPTY_SEARCH, NOTFOUND_URL } from '../../utils/constants';
+import {
+  EMPTY_SEARCH,
+  NOTFOUND_URL,
+  SEARCH_TERM_ERROR,
+} from '../../utils/constants';
 import './NotFound.css';
 import { useEffect } from 'react';
 import { setParams } from '../../store/slices/appSlice';
@@ -9,12 +13,10 @@ import { RootState } from '../../store/store';
 const NotFound = () => {
   const dispatch = useDispatch();
   const { setSearchValue } = useLocalStorage();
-  const pageError = useSelector(
-    (state: RootState) => state.app.error.pageError
-  );
+  const error = useSelector((state: RootState) => state.app.error);
 
   useEffect(() => {
-    if (pageError) {
+    if (error.pageError === SEARCH_TERM_ERROR) {
       setSearchValue(EMPTY_SEARCH);
       dispatch(
         setParams({
