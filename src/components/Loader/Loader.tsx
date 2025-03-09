@@ -1,4 +1,3 @@
-import './Loader.css';
 import { LOADER_URL } from '../../utils/constants';
 
 const Loader = () => {

@@ -1,24 +1,28 @@
-import { useNavigate } from 'react-router';
-import './Pagination.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setParams } from '../../store/slices/appSlice';
 import { RootState } from '../../store/store';
+import { useRouter } from 'next/navigation';
+import { EMPTY_SEARCH } from '../../utils/constants';
 
 const Pagination = () => {
-  const currentPage = useSelector((state: RootState) => state.app.params.page);
+  const currentParams = useSelector((state: RootState) => state.app.params);
   const totalPage = useSelector(
     (state: RootState) => state.app.data.currentPageCards?.info?.pages
   );
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const changePage = (newPage: number) => {
     dispatch(
       setParams({
         page: newPage,
+        details: undefined,
       })
     );
-    navigate(`/${newPage}`);
+    const currentSearch = currentParams.searchTerm.length
+      ? `&search=${currentParams.searchTerm}`
+      : EMPTY_SEARCH;
+    router.push(`/?page=${newPage}${currentSearch}`);
   };
 
   return (
@@ -27,7 +31,7 @@ const Pagination = () => {
         return (
           <span
             onClick={() => changePage(x + 1)}
-            className={x + 1 === currentPage ? 'page current' : 'page'}
+            className={x + 1 === currentParams.page ? 'page current' : 'page'}
             key={x}
             data-testid={`pagination-page-${x + 1}`}
           >

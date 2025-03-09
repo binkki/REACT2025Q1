@@ -1,10 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setParams } from '../../store/slices/appSlice';
-import { useEffect, useState } from 'react';
-import './Search.css';
+import { useRouter } from 'next/navigation';
 
 type SearchFormFields = {
   search: string;
@@ -12,24 +9,19 @@ type SearchFormFields = {
 
 const Search = () => {
   const { register, handleSubmit } = useForm<SearchFormFields>();
-  const { setSearchValue, getSearchValue } = useLocalStorage();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState('');
-
-  useEffect(() => {
-    setInputValue(getSearchValue());
-  }, []);
+  const router = useRouter();
 
   const submitSearch: SubmitHandler<SearchFormFields> = (data) => {
-    setSearchValue(data.search);
     dispatch(
       setParams({
         page: 1,
         searchTerm: data.search,
+        details: undefined,
       })
     );
-    navigate('/1');
+    const searchParam = data.search.length ? `&search=${data.search}` : '';
+    router.push(`/?page=1${searchParam}`);
   };
 
   return (
@@ -42,7 +34,6 @@ const Search = () => {
           id="search-input"
           data-testid="search-input"
           type="input"
-          defaultValue={inputValue}
           {...register('search')}
         />
         <button data-testid="search-submit">Search</button>

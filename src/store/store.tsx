@@ -1,14 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit';
 import appReducer from './slices/appSlice';
 import { rickApi } from './api/rickApi';
+import { createWrapper } from 'next-redux-wrapper';
+import { useDispatch } from 'react-redux';
 
-export const store = configureStore({
-  reducer: {
-    app: appReducer,
-    [rickApi.reducerPath]: rickApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(rickApi.middleware),
-});
+export const setupStore = () => {
+  return configureStore({
+    reducer: {
+      app: appReducer,
+      [rickApi.reducerPath]: rickApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(rickApi.middleware),
+  });
+};
 
-export type RootState = ReturnType<typeof store.getState>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
+export const useAppDispatch: () => AppDispatch = useDispatch;
+
+export const wrapper = createWrapper<AppStore>(setupStore, {});

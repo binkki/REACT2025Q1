@@ -2,7 +2,7 @@ import { CardInfo } from '../types';
 import { CSV_HEADER } from './constants';
 
 export const getNumberFromString = (
-  value: string | undefined
+  value: string | string[] | undefined
 ): number | undefined => {
   const parsedValue = Number(value);
   return !isNaN(parsedValue) && !isFloatNumber(parsedValue) && parsedValue > 0

@@ -1,25 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
 import { CardInfo } from '../../types';
-import './Card.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addBookmark,
   removeBookmark,
-  setData,
+  setParams,
 } from '../../store/slices/appSlice';
 import { RootState } from '../../store/store';
+import { useRouter } from 'next/navigation';
+import { EMPTY_SEARCH } from '../../utils/constants';
 
 const Card = (props: { cardInfo: CardInfo }) => {
   const { cardInfo } = props;
-  const { pageId, detailsId } = useParams();
-  const navigate = useNavigate();
   const bookmarkRef = useRef(null);
   const [bookmarked, setBookmarked] = useState(false);
   const dispatch = useDispatch();
   const bookmarkedCards = useSelector(
     (state: RootState) => state.app.bookmarks
   );
+  const params = useSelector((state: RootState) => state.app.params);
+  const router = useRouter();
 
   useEffect(() => {
     setBookmarked(
@@ -38,16 +38,16 @@ const Card = (props: { cardInfo: CardInfo }) => {
   };
 
   const openDetails = () => {
-    const characterId = cardInfo.id;
-    if (!detailsId) navigate(`/${pageId}/${characterId}`);
-    else {
-      dispatch(
-        setData({
-          currentDetails: undefined,
-        })
-      );
-      navigate(`/${pageId}`);
-    }
+    dispatch(
+      setParams({
+        details: cardInfo.id,
+      })
+    );
+    const currentPage = params.page;
+    const currentSearch = params.searchTerm.length
+      ? `&search=${params.searchTerm}`
+      : EMPTY_SEARCH;
+    router.push(`/?page=${currentPage}${currentSearch}&details=${cardInfo.id}`);
   };
 
   return (
