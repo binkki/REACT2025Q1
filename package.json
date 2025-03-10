@@ -7,7 +7,9 @@
     "start": "next build && next start",
     "lint": "eslint .",
     "format:fix": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest",
+    "coverage": "vitest --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
