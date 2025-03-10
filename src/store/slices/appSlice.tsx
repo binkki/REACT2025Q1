@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppSlice, CardInfo } from '../../types';
-import { SEARCH_KEY } from '../../utils/constants';
 
 const initialState: AppSlice = {
   bookmarks: [],
   params: {
     page: 1,
-    searchTerm: localStorage.getItem(SEARCH_KEY) ?? '',
-    details: '1',
+    searchTerm: '',
+    details: undefined,
   },
   error: {
     pageError: undefined,

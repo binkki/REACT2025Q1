@@ -14,5 +14,3 @@ export const rickApi = createApi({
     }),
   }),
 });
-
-export const { useGetCardsQuery, useGetDetailsQuery } = rickApi;

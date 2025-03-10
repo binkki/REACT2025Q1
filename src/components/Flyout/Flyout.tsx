@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { removeAllBookmarks } from '../../store/slices/appSlice';
-import './Flyout.css';
 import { useEffect, useRef, useState } from 'react';
 import { RootState } from '../../store/store';
 import { generateCSVfromArray } from '../../utils/utils';
