@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { setupStore } from '../src/store/store';
 import { Provider } from 'react-redux';
-import DetailsPage from '../src/components/DetailsPage/DetailsPage';
+import { DetailsPage } from '../src/components/DetailsPage';
 import { testItems } from './testData';
 import { API_EPISODE } from '../src/utils/constants';
 import { setData, setParams } from '../src/store/slices/appSlice';

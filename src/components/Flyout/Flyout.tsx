@@ -1,3 +1,4 @@
+'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeAllBookmarks } from '../../store/slices/appSlice';
 import { useEffect, useRef, useState } from 'react';
@@ -5,7 +6,7 @@ import { RootState } from '../../store/store';
 import { generateCSVfromArray } from '../../utils/utils';
 import { LinkAtributes } from '../../types';
 
-const Flyout = () => {
+export const Flyout = () => {
   const dispatch = useDispatch();
   const bookmarkedCards = useSelector(
     (state: RootState) => state.app.bookmarks
@@ -62,5 +63,3 @@ const Flyout = () => {
     )
   );
 };
-
-export default Flyout;

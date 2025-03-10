@@ -1,10 +1,11 @@
+'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import { setParams } from '../../store/slices/appSlice';
 import { RootState } from '../../store/store';
 import { useRouter } from 'next/navigation';
 import { EMPTY_SEARCH } from '../../utils/constants';
 
-const Pagination = () => {
+export const Pagination = () => {
   const currentParams = useSelector((state: RootState) => state.app.params);
   const totalPage = useSelector(
     (state: RootState) => state.app.data.currentPageCards?.info?.pages
@@ -42,5 +43,3 @@ const Pagination = () => {
     </div>
   );
 };
-
-export default Pagination;

@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useRef, useState } from 'react';
 import { CardInfo } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +11,7 @@ import { RootState } from '../../store/store';
 import { useRouter } from 'next/navigation';
 import { EMPTY_SEARCH } from '../../utils/constants';
 
-const Card = (props: { cardInfo: CardInfo }) => {
+export const Card = (props: { cardInfo: CardInfo }) => {
   const { cardInfo } = props;
   const bookmarkRef = useRef(null);
   const [bookmarked, setBookmarked] = useState(false);
@@ -70,5 +71,3 @@ const Card = (props: { cardInfo: CardInfo }) => {
     </div>
   );
 };
-
-export default Card;

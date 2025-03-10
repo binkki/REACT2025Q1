@@ -5,7 +5,7 @@ import { userEvent } from '@testing-library/user-event';
 import { testSearchTerm } from './testData';
 import { Provider } from 'react-redux';
 import { setupStore } from '../src/store/store';
-import Search from '../src/components/Search/Search';
+import { Search } from '../src/components/Search';
 import { EMPTY_SEARCH } from '../src/utils/constants';
 
 describe('Search Component', () => {

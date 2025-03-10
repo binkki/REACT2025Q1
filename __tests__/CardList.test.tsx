@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { testItems, testResponse } from './testData';
 import { Provider } from 'react-redux';
 import { setupStore } from '../src/store/store';
-import CardList from '../src/components/CardList/CardList';
+import { CardList } from '../src/components/CardList';
 import { setData } from '../src/store/slices/appSlice';
 import { ERROR_MESSAGE } from '../src/utils/constants';
 

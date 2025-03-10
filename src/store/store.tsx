@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import appReducer from './slices/appSlice';
 import { rickApi } from './api/rickApi';
-import { createWrapper } from 'next-redux-wrapper';
 import { useDispatch } from 'react-redux';
 
 export const setupStore = () => {
@@ -20,4 +19,4 @@ export type RootState = ReturnType<AppStore['getState']>;
 export type AppDispatch = AppStore['dispatch'];
 export const useAppDispatch: () => AppDispatch = useDispatch;
 
-export const wrapper = createWrapper<AppStore>(setupStore, {});
+export const store = setupStore();

@@ -4,7 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { testItems } from './testData';
 import { Provider } from 'react-redux';
 import { setupStore } from '../src/store/store';
-import Card from '../src/components/Card/Card';
+import { Card } from '../src/components/Card';
 import userEvent from '@testing-library/user-event';
 
 describe('Card Component', () => {

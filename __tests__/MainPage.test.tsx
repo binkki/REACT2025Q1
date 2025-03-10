@@ -3,8 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { testItems, testResponse } from './testData';
 import { setupStore } from '../src/store/store';
 import { Provider } from 'react-redux';
-import MainPage from '../src/components/MainPage/MainPage';
+import { MainPage } from '../src/components/MainPage';
 import { setData } from '../src/store/slices/appSlice';
+import { EMPTY_SEARCH } from '../src/utils/constants';
 
 describe('Main Page', () => {
   it('Renders correct Main Page', async () => {
@@ -16,7 +17,13 @@ describe('Main Page', () => {
     );
     render(
       <Provider store={store}>
-        <MainPage />
+        <MainPage
+          cardsData={testResponse}
+          detailsData={testItems[0]}
+          page={'1'}
+          searchTerm={EMPTY_SEARCH}
+          detailsId={undefined}
+        />
       </Provider>
     );
     expect(screen.queryAllByTestId('search-input').length).toBe(1);

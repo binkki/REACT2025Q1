@@ -1,10 +1,11 @@
+'use client';
 import { API_EPISODE, EMPTY_SEARCH } from '../../utils/constants';
 import { setData, setParams } from '../../store/slices/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useRouter } from 'next/navigation';
 
-const DetailsPage = () => {
+export const DetailsPage = () => {
   const dispatch = useDispatch();
   const data = useSelector((state: RootState) => state.app.data.currentDetails);
   const params = useSelector((state: RootState) => state.app.params);
@@ -55,5 +56,3 @@ const DetailsPage = () => {
     </div>
   );
 };
-
-export default DetailsPage;

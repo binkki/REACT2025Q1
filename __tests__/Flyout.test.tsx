@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { setupStore } from '../src/store/store';
 import { testItems } from './testData';
 import { addBookmark } from '../src/store/slices/appSlice';
-import Flyout from '../src/components/Flyout/Flyout';
+import { Flyout } from '../src/components/Flyout';
 
 describe('Flyout Component', () => {
   it('Should render flyout component if character was bookmarked', async () => {

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import NotFound from '../src/components/NotFound/NotFound';
+import { NotFound } from '../src/components/NotFound';
 
 describe('Not Found Page', () => {
   it('Renders Not Found page', async () => {

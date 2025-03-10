@@ -1,11 +1,11 @@
-import Card from '../Card/Card';
+import { Card } from '../Card';
 import { CardInfo } from '../../types';
 import { ERROR_MESSAGE } from '../../utils/constants';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import DetailsPage from '../DetailsPage/DetailsPage';
+import { DetailsPage } from '../DetailsPage';
 
-const CardList = () => {
+export const CardList = () => {
   const cards = useSelector(
     (state: RootState) => state.app.data.currentPageCards?.results
   );
@@ -28,5 +28,3 @@ const CardList = () => {
     </>
   );
 };
-
-export default CardList;

@@ -1,7 +1,8 @@
+'use client';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/themeContext';
 
-const ThemeButton = () => {
+export const ThemeButton = () => {
   const { setTheme } = useContext(ThemeContext);
 
   return (
@@ -18,5 +19,3 @@ const ThemeButton = () => {
     </>
   );
 };
-
-export default ThemeButton;

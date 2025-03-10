@@ -1,3 +1,4 @@
+'use client';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setParams } from '../../store/slices/appSlice';
@@ -7,7 +8,7 @@ type SearchFormFields = {
   search: string;
 };
 
-const Search = () => {
+export const Search = () => {
   const { register, handleSubmit } = useForm<SearchFormFields>();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -41,5 +42,3 @@ const Search = () => {
     </>
   );
 };
-
-export default Search;

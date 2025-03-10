@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { AppTheme } from '../src/types';
-import ThemeButton from '../src/components/ThemeButton/ThemeButton';
+import { ThemeButton } from '../src/components/ThemeButton';
 import { ThemeProvider } from '../src/context/themeContext';
 
 describe('Theme Button', () => {

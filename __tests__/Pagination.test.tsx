@@ -5,7 +5,7 @@ import { userEvent } from '@testing-library/user-event';
 import { testPageNumber, testResponse } from './testData';
 import { setupStore } from '../src/store/store';
 import { setData } from '../src/store/slices/appSlice';
-import Pagination from '../src/components/Pagination/Pagination';
+import { Pagination } from '../src/components/Pagination';
 import { Provider } from 'react-redux';
 
 describe('Pagination Component', () => {
