@@ -1,10 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router';
+import { useState } from 'react';
 import { Inputs } from '../types';
 import { RootState } from '../store';
 import { convertImageToBase64 } from '../utils/utils';
 import { addControlledResult } from '../store/slices/appSlice';
+import PasswordStrength from './PasswordStrength';
 
 const ReactHookForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
@@ -12,6 +14,9 @@ const ReactHookForm = () => {
   const navigate = useNavigate();
 
   const countries = useSelector((state: RootState) => state.app.countries);
+
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const image64 = await convertImageToBase64(data.image);
@@ -58,13 +63,23 @@ const ReactHookForm = () => {
           type="password"
           placeholder="Password"
           {...register('password')}
+          onChange={(e) => {
+            e.preventDefault();
+            setPassword((e.target as HTMLInputElement).value);
+          }}
         />
+        <PasswordStrength password={password} />
         <input
           id="rhf-password_confirm"
           type="password"
           placeholder="Confirm password"
           {...register('password_confirm')}
+          onChange={(e) => {
+            e.preventDefault();
+            setPasswordConfirm((e.target as HTMLInputElement).value);
+          }}
         />
+        <PasswordStrength password={passwordConfirm} />
         <select id="rhf-gender" {...register('gender')}>
           <option value="male">Male</option>
           <option value="female">Female</option>

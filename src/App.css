@@ -69,3 +69,29 @@ img {
 .new-form {
   border: 1px solid red;
 }
+
+.strength {
+  border: none;
+  outline: none;
+  height: 5px;
+}
+
+.strength-transparent {
+  color: transparent;
+  display: none;
+}
+
+.strength-red {
+  background-color: red;
+  width: 33%;
+}
+
+.strength-orange {
+  background-color: orange;
+  width: 66%;
+}
+
+.strength-green {
+  background-color: green;
+  width: 100%;
+}

@@ -233,3 +233,24 @@ export const contriesList = [
   'Zambia',
   'Zimbabwe',
 ];
+
+export const textSymbolPattern = {
+  regex: /(?=.*[!@#$%^_&*])/,
+  error:
+    'This field must contain at least one of these special symbols !@#$%^&*',
+};
+
+export const textNumberPattern = {
+  regex: /(?=.*[0-9])/,
+  error: 'This field must contain at least one number 0-9',
+};
+
+export const textLowerPattern = {
+  regex: /(?=.*[a-z])/,
+  error: 'This field must contain at least one lovercase character a-z',
+};
+
+export const textUpperPattern = {
+  regex: /(?=.*[A-Z])/,
+  error: 'This field must contain at least one uppercase character A-Z',
+};

@@ -1,9 +1,10 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router';
 import { RootState } from '../store';
 import { convertImageToBase64 } from '../utils/utils';
 import { addUncontrolledResult } from '../store/slices/appSlice';
+import PasswordStrength from './PasswordStrength';
 
 function UncontrolledForm() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -19,6 +20,9 @@ function UncontrolledForm() {
   const countries = useSelector((state: RootState) => state.app.countries);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -51,13 +55,19 @@ function UncontrolledForm() {
           type="password"
           placeholder="Password"
           ref={passwordRef}
+          onChange={() => setPassword(passwordRef?.current?.value ?? '')}
         />
+        <PasswordStrength password={password} />
         <input
           id="password_confirm"
           type="password"
           placeholder="Confirm password"
           ref={passwordConfirmRef}
+          onChange={() =>
+            setPasswordConfirm(passwordConfirmRef?.current?.value ?? '')
+          }
         />
+        <PasswordStrength password={passwordConfirm} />
         <select id="gender" ref={genderRef}>
           <option value="male">Male</option>
           <option value="female">Female</option>
