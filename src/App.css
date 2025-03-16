@@ -95,3 +95,9 @@ img {
   background-color: green;
   width: 100%;
 }
+
+.error {
+  width: fit-content;
+  font-size: 0.7rem;
+  color: red;
+}

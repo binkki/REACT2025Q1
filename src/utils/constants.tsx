@@ -1,3 +1,48 @@
+export const fieldRequiredError = 'This field is required';
+export const termsError = 'Please accept our terms and conditions';
+export const passwordMatchError = 'Passwords must match';
+export const ageMinError = 'Age must be a positive number';
+export const ageMaxError = 'Sorry, you are to old';
+export const imageExtError = 'Only png, jpg and jpeg files are allowed';
+export const imageSizeError = 'File size must be less than 10MB';
+export const numberError = 'Please enter a valid number';
+export const countriesError = 'Please enter valid country name';
+
+export const textSymbolPattern = {
+  regex: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/,
+  error: 'This field must contain at least one special character',
+};
+
+export const textNumberPattern = {
+  regex: /(?=.*[0-9])/,
+  error: 'This fiels must contain at least 1 number',
+};
+
+export const textLowerPattern = {
+  regex: /(?=.*[a-z])/,
+  error: 'This field must contain at least one lovercase character a-z',
+};
+
+export const textUpperPattern = {
+  regex: /(?=.*[A-Z])/,
+  error: 'This field must contain at least one uppercase character A-Z',
+};
+
+export const textFirstUpperPattern = {
+  regex: /[A-Z]/,
+  error: 'First letter should be uppercase',
+};
+
+export const emailPattern = {
+  regex: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+  error: 'Please enter a valid email',
+};
+
+export const spacesPattern = {
+  regex: /^\S*$/,
+  error: 'Password must not contain spaces',
+};
+
 export const contriesList = [
   'Afghanistan',
   'Albania',
@@ -233,24 +278,3 @@ export const contriesList = [
   'Zambia',
   'Zimbabwe',
 ];
-
-export const textSymbolPattern = {
-  regex: /(?=.*[!@#$%^_&*])/,
-  error:
-    'This field must contain at least one of these special symbols !@#$%^&*',
-};
-
-export const textNumberPattern = {
-  regex: /(?=.*[0-9])/,
-  error: 'This field must contain at least one number 0-9',
-};
-
-export const textLowerPattern = {
-  regex: /(?=.*[a-z])/,
-  error: 'This field must contain at least one lovercase character a-z',
-};
-
-export const textUpperPattern = {
-  regex: /(?=.*[A-Z])/,
-  error: 'This field must contain at least one uppercase character A-Z',
-};

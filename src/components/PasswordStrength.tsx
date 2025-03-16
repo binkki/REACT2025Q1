@@ -10,6 +10,7 @@ const passStrengthStyles = [
   'strength-transparent',
   'strength-red',
   'strength-orange',
+  'strength-orange',
   'strength-green',
 ];
 

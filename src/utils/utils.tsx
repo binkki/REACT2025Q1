@@ -1,3 +1,6 @@
+import { FieldErrors } from 'react-hook-form';
+import { Inputs } from '../types';
+
 export const convertImageToBase64 = (
   fileList: FileList | null | undefined
 ): Promise<string | ArrayBuffer | null> => {
@@ -13,4 +16,15 @@ export const convertImageToBase64 = (
       };
     } else reject('Please select image');
   });
+};
+
+export const getFormErrorStatus = (errors: FieldErrors<Inputs>) => {
+  const result =
+    errors.name === undefined &&
+    errors.age === undefined &&
+    errors.email === undefined &&
+    errors.country === undefined &&
+    errors.image === undefined &&
+    errors.terms === undefined;
+  return !result;
 };
