@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { Inputs } from '../types';
 import { RootState } from '../store';
 import { convertImageToBase64 } from '../utils/utils';
@@ -8,6 +9,7 @@ import { addControlledResult } from '../store/slices/appSlice';
 const ReactHookForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const countries = useSelector((state: RootState) => state.app.countries);
 
@@ -26,12 +28,13 @@ const ReactHookForm = () => {
         image: image64,
       })
     );
+    navigate('/');
   };
 
   return (
-    <>
+    <div className="flex flex-column">
       <div>React Hook Form</div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-column" onSubmit={handleSubmit(onSubmit)}>
         <input
           id="rhf-name"
           type="text"
@@ -70,6 +73,7 @@ const ReactHookForm = () => {
           type="text"
           id="country"
           list="countryList"
+          placeholder="Select your country"
           {...register('country')}
         />
         <datalist id="countryList">
@@ -86,7 +90,7 @@ const ReactHookForm = () => {
         </div>
         <button>Submit</button>
       </form>
-    </>
+    </div>
   );
 };
 

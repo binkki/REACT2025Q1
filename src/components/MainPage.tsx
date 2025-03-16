@@ -1,15 +1,20 @@
-import { NavLink } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import FormList from './FormList';
 
 function MainPage() {
+  const uncontrolledResults = useSelector(
+    (state: RootState) => state.app.uncontrolledResults
+  );
+  const controlledResults = useSelector(
+    (state: RootState) => state.app.controlledResults
+  );
+
   return (
-    <>
-      <NavLink to={'/uncontrolled-form'} className="link">
-        Fill out an Uncontrolled Form
-      </NavLink>
-      <NavLink to={'/controlled-form'} className="link">
-        Fill out a Controlled Form
-      </NavLink>
-    </>
+    <div className="flex flex-column main-wrapper">
+      <FormList data={uncontrolledResults} title={'uncontrolled'} />
+      <FormList data={controlledResults} title={'controlled'} />
+    </div>
   );
 }
 

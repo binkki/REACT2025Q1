@@ -1,5 +1,6 @@
 import { FormEvent, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { RootState } from '../store';
 import { convertImageToBase64 } from '../utils/utils';
 import { addUncontrolledResult } from '../store/slices/appSlice';
@@ -17,6 +18,7 @@ function UncontrolledForm() {
 
   const countries = useSelector((state: RootState) => state.app.countries);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -34,12 +36,13 @@ function UncontrolledForm() {
         image: image64,
       })
     );
+    navigate('/');
   };
 
   return (
-    <>
+    <div className="flex flex-column">
       <div>Uncontrolled Form</div>
-      <form onSubmit={(e: FormEvent) => submit(e)}>
+      <form className="flex flex-column" onSubmit={(e: FormEvent) => submit(e)}>
         <input id="name" type="text" placeholder="Name" ref={nameRef} />
         <input id="age" type="number" placeholder="Age" ref={ageRef} />
         <input id="email" type="text" placeholder="Email" ref={emailRef} />
@@ -59,7 +62,13 @@ function UncontrolledForm() {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <input type="text" id="country" list="countryList" ref={countryRef} />
+        <input
+          type="text"
+          id="country"
+          list="countryList"
+          placeholder="Select your country"
+          ref={countryRef}
+        />
         <datalist id="countryList">
           {countries.map((optionCountry: string, _) => (
             <option key={_} value={optionCountry}>
@@ -74,7 +83,7 @@ function UncontrolledForm() {
         </div>
         <button type="submit">Submit</button>
       </form>
-    </>
+    </div>
   );
 }
 
