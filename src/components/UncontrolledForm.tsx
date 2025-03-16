@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { RootState } from '../store';
 import { convertImageToBase64 } from '../utils/utils';
 import { addUncontrolledResult } from '../store/slices/appSlice';
@@ -36,7 +36,7 @@ function UncontrolledForm() {
         image: image64,
       })
     );
-    navigate('/');
+    navigate('/', { state: { lastSubmited: 'uncontrolled' } });
   };
 
   return (
@@ -83,6 +83,7 @@ function UncontrolledForm() {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <NavLink to="/">Home</NavLink>
     </div>
   );
 }

@@ -2,11 +2,16 @@ import { FormData } from '../types';
 
 type FormListInputProps = {
   formData: FormData;
+  isNew: boolean;
 };
 
 function FormListInput(props: FormListInputProps) {
   return (
-    <div className="flex flex-column form-preview">
+    <div
+      className={'flex flex-column form-preview'.concat(
+        props.isNew ? ' new-form' : ''
+      )}
+    >
       <span>Name: {props.formData.name}</span>
       <span>Email: {props.formData.email}</span>
       <span>Age: {props.formData.age}</span>

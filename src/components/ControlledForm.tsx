@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { Inputs } from '../types';
 import { RootState } from '../store';
 import { convertImageToBase64 } from '../utils/utils';
@@ -28,7 +28,7 @@ const ReactHookForm = () => {
         image: image64,
       })
     );
-    navigate('/');
+    navigate('/', { state: { lastSubmited: 'controlled' } });
   };
 
   return (
@@ -90,6 +90,7 @@ const ReactHookForm = () => {
         </div>
         <button>Submit</button>
       </form>
+      <NavLink to="/">Home</NavLink>
     </div>
   );
 };
