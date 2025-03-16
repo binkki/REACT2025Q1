@@ -46,13 +46,16 @@ img {
   min-height: calc(50% - 10px);
   border: 1px solid black;
   border-radius: 20px;
+  align-items: center;
 }
 
 .form-data {
   gap: 15px;
   height: 80%;
+  width: 90%;
   overflow-x: auto;
-  justify-content: center;
+  align-items: safe center;
+  justify-content: safe center;
 }
 
 .form-preview {
