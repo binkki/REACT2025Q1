@@ -12,4 +12,6 @@ export type Inputs = {
 
 export type AppSliceType = {
   countries: string[];
+  uncontrolledResults: Inputs[];
+  controlledResults: Inputs[];
 };

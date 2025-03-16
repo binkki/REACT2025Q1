@@ -1,6 +1,8 @@
 import { FormEvent, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { convertImageToBase64 } from '../utils/utils';
+import { addUncontrolledResult } from '../store/slices/appSlice';
 
 function UncontrolledForm() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -14,21 +16,24 @@ function UncontrolledForm() {
   const imageRef = useRef<HTMLInputElement>(null);
 
   const countries = useSelector((state: RootState) => state.app.countries);
+  const dispatch = useDispatch();
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    const result = {
-      name: nameRef?.current?.value ?? '',
-      age: Number(ageRef?.current?.value),
-      email: emailRef?.current?.value ?? '',
-      password: passwordRef?.current?.value ?? '',
-      password_confirm: passwordConfirmRef?.current?.value ?? '',
-      terms: termsRef?.current?.checked ?? false,
-      gender: genderRef?.current?.value ?? '',
-      country: countryRef?.current?.value ?? '',
-      image: imageRef?.current?.files,
-    };
-    console.log(result);
+    const image64 = await convertImageToBase64(imageRef?.current?.files);
+    dispatch(
+      addUncontrolledResult({
+        name: nameRef?.current?.value ?? '',
+        age: Number(ageRef?.current?.value),
+        email: emailRef?.current?.value ?? '',
+        password: passwordRef?.current?.value ?? '',
+        password_confirm: passwordConfirmRef?.current?.value ?? '',
+        terms: termsRef?.current?.checked ?? false,
+        gender: genderRef?.current?.value ?? '',
+        country: countryRef?.current?.value ?? '',
+        image: image64,
+      })
+    );
   };
 
   return (

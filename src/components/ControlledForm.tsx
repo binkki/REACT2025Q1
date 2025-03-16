@@ -1,26 +1,31 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Inputs } from '../types';
 import { RootState } from '../store';
+import { convertImageToBase64 } from '../utils/utils';
+import { addControlledResult } from '../store/slices/appSlice';
 
 const ReactHookForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
+  const dispatch = useDispatch();
 
   const countries = useSelector((state: RootState) => state.app.countries);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const result = {
-      name: data.name,
-      age: data.age,
-      email: data.email,
-      password: data.password,
-      password_confirm: data.password_confirm,
-      terms: data.terms,
-      gender: data.gender,
-      country: data.country,
-      image: data.image,
-    };
-    console.log(result);
+    const image64 = await convertImageToBase64(data.image);
+    dispatch(
+      addControlledResult({
+        name: data.name,
+        age: data.age,
+        email: data.email,
+        password: data.password,
+        password_confirm: data.password_confirm,
+        terms: data.terms,
+        gender: data.gender,
+        country: data.country,
+        image: image64,
+      })
+    );
   };
 
   return (
