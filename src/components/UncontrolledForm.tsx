@@ -1,4 +1,6 @@
 import { FormEvent, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 function UncontrolledForm() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -8,6 +10,9 @@ function UncontrolledForm() {
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const genderRef = useRef<HTMLSelectElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
+
+  const countries = useSelector((state: RootState) => state.app.countries);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -46,6 +51,14 @@ function UncontrolledForm() {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+        <input type="text" id="country" list="countryList" ref={countryRef} />
+        <datalist id="countryList">
+          {countries.map((optionCountry: string, _) => (
+            <option key={_} value={optionCountry}>
+              {optionCountry}
+            </option>
+          ))}
+        </datalist>
         <div>
           <span>Accept terms and conditions</span>
           <input id="terms" type="checkbox" ref={termsRef} />

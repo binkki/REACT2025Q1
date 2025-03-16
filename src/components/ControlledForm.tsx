@@ -1,17 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-
-export type Inputs = {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  password_confirm: string;
-  gender: string;
-  terms: boolean | undefined;
-};
+import { useSelector } from 'react-redux';
+import { Inputs } from '../types';
+import { RootState } from '../store';
 
 const ReactHookForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
+
+  const countries = useSelector((state: RootState) => state.app.countries);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => console.log(data);
 
@@ -53,6 +48,19 @@ const ReactHookForm = () => {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+        <input
+          type="text"
+          id="country"
+          list="countryList"
+          {...register('country')}
+        />
+        <datalist id="countryList">
+          {countries.map((optionCountry: string, _) => (
+            <option key={_} value={optionCountry}>
+              {optionCountry}
+            </option>
+          ))}
+        </datalist>
         <div>
           <span>Accept terms and conditions</span>
           <input id="rhf-terms" type="checkbox" {...register('terms')} />
