@@ -7,6 +7,7 @@ export type Inputs = {
   gender: string;
   terms: boolean | undefined;
   country: string;
+  image: FileList;
 };
 
 export type AppSliceType = {

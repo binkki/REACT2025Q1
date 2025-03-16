@@ -8,7 +8,20 @@ const ReactHookForm = () => {
 
   const countries = useSelector((state: RootState) => state.app.countries);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const result = {
+      name: data.name,
+      age: data.age,
+      email: data.email,
+      password: data.password,
+      password_confirm: data.password_confirm,
+      terms: data.terms,
+      gender: data.gender,
+      country: data.country,
+      image: data.image,
+    };
+    console.log(result);
+  };
 
   return (
     <>
@@ -61,6 +74,7 @@ const ReactHookForm = () => {
             </option>
           ))}
         </datalist>
+        <input id="rhf-image" type="file" {...register('image')} />
         <div>
           <span>Accept terms and conditions</span>
           <input id="rhf-terms" type="checkbox" {...register('terms')} />

@@ -11,6 +11,7 @@ function UncontrolledForm() {
   const genderRef = useRef<HTMLSelectElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const countries = useSelector((state: RootState) => state.app.countries);
 
@@ -21,9 +22,11 @@ function UncontrolledForm() {
       age: Number(ageRef?.current?.value),
       email: emailRef?.current?.value ?? '',
       password: passwordRef?.current?.value ?? '',
-      password_copy: passwordConfirmRef?.current?.value ?? '',
+      password_confirm: passwordConfirmRef?.current?.value ?? '',
       terms: termsRef?.current?.checked ?? false,
       gender: genderRef?.current?.value ?? '',
+      country: countryRef?.current?.value ?? '',
+      image: imageRef?.current?.files,
     };
     console.log(result);
   };
@@ -59,6 +62,7 @@ function UncontrolledForm() {
             </option>
           ))}
         </datalist>
+        <input id="image" type="file" ref={imageRef} />
         <div>
           <span>Accept terms and conditions</span>
           <input id="terms" type="checkbox" ref={termsRef} />
